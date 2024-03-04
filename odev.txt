@@ -1,0 +1,71 @@
+
+import java.util.Arrays;
+
+public class Maraton1 {
+
+    public static void main(String[] args) {
+        int[] bitisZamanlari = {2341, 273, 278, 329,445,402,338,270,243,334,412,393,299,343,317,265};
+        String[] ogrenciAdlari = {"kadir", "gökhan", "hakan", "suzan", "pınar" , "mehmet", "ali" ,"emel", "fırat","james","jale","ersin","deniz", "gözde","anıl","burak"};
+
+        String birinci = birinci(ogrenciAdlari, bitisZamanlari);
+        System.out.println("Birinci : " + birinci);
+
+        String ikinci = ikinci(ogrenciAdlari, bitisZamanlari);
+        System.out.println("İkinci : " + ikinci);
+
+        String ucuncu = ucuncu(ogrenciAdlari, bitisZamanlari);
+        System.out.println("Üçüncü : " + ucuncu);
+
+        ogrencileriSiniflandir(bitisZamanlari);
+    }
+
+    public static int enDusukZamanliKisi(int[] bitisZamanlari) {
+        int enDusukIndex = 0;
+        for (int i = 1; i < bitisZamanlari.length; i++) {
+            if (bitisZamanlari[i] < bitisZamanlari[enDusukIndex]) {
+                enDusukIndex = i;
+            }
+        }
+        return enDusukIndex;
+    }
+
+    public static String birinci(String[] ogrenciAdlari, int[] bitisZamanlari) {
+        int enDusukIndex = enDusukZamanliKisi(bitisZamanlari);
+        return ogrenciAdlari[enDusukIndex] + " -> " + bitisZamanlari[enDusukIndex] + " dakika";
+    }
+
+    public static String ikinci(String[] ogrenciAdlari, int[] bitisZamanlari) {
+        int enDusukIndex = enDusukZamanliKisi(bitisZamanlari);
+        bitisZamanlari[enDusukIndex] = Integer.MAX_VALUE;
+        enDusukIndex = enDusukZamanliKisi(bitisZamanlari);
+        return ogrenciAdlari[enDusukIndex] + " -> " + bitisZamanlari[enDusukIndex] + " dakika";
+    }
+
+    public static String ucuncu(String[] ogrenciAdlari, int[] bitisZamanlari) {
+        int enDusukIndex = enDusukZamanliKisi(bitisZamanlari);
+        bitisZamanlari[enDusukIndex] = Integer.MAX_VALUE;
+        enDusukIndex = enDusukZamanliKisi(bitisZamanlari);
+        bitisZamanlari[enDusukIndex] = Integer.MAX_VALUE;
+        enDusukIndex = enDusukZamanliKisi(bitisZamanlari);
+        return ogrenciAdlari[enDusukIndex] + " -> " + bitisZamanlari[enDusukIndex] + " dakika";
+    }
+
+    public static void ogrencileriSiniflandir(int[] bitisZamanlari) {
+        int[] sinifSayilari = new int[3];
+        Arrays.fill(sinifSayilari, 0);
+
+        for (int i = 0; i < bitisZamanlari.length; i++) {
+            if (bitisZamanlari[i] >= 200 && bitisZamanlari[i] <= 299) {
+                sinifSayilari[0]++;
+            } else if (bitisZamanlari[i] >= 300 && bitisZamanlari[i] <= 399) {
+                sinifSayilari[1]++;
+            } else {
+                sinifSayilari[2]++;
+            }
+        }
+
+        System.out.println("A -> " + sinifSayilari[0]);
+        System.out.println("B -> " + sinifSayilari[1]);
+        System.out.println("C -> " + sinifSayilari[2]);
+    }
+}
